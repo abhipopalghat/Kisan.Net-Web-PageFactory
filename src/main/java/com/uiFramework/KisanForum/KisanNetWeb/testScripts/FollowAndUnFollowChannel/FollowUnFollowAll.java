@@ -23,7 +23,7 @@ public class FollowUnFollowAll extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnDiscoverIcon();
@@ -71,7 +71,7 @@ public class FollowUnFollowAll extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnDiscoverIcon();
@@ -96,7 +96,7 @@ public class FollowUnFollowAll extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnDiscoverIcon();
@@ -123,7 +123,7 @@ public class FollowUnFollowAll extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnRightOptionMenu();
@@ -151,7 +151,7 @@ public class FollowUnFollowAll extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnLeftDrawerIcon();

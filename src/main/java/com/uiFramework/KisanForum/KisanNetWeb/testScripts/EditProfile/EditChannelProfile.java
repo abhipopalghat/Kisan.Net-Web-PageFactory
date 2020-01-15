@@ -24,7 +24,7 @@ public class EditChannelProfile extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		//loginPage.loginToApp("exh_0008@mailinator.com", "kisankisan");
 
 		

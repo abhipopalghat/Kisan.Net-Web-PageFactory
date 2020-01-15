@@ -22,7 +22,7 @@ public class FollowChannelInviteToValidNumber extends TestBase{
 		
 		LoginPage loginPage = new LoginPage(driver);
 		//loginPage.loginToApp("manisha.kisan17@gmail.com", "manisha123");
-		loginPage.loginToApp(emailId, password);				//adjusted for checking live login
+		loginPage.loginAsExhibitor(emailId, password);				//adjusted for checking live login
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnRightOptionMenu();

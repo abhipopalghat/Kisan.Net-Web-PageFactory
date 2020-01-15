@@ -149,6 +149,11 @@ public class PropertyReader implements ConfigReader {
 		return OR.getProperty("promocode");
 	}
 
-	
+	public String getSignupMobileNumber() {
+		if(System.getProperty("signupMobile")!=null){
+			return System.getProperty("signupMobile");
+		}
+		return OR.getProperty("Signup mobile is not specified, Please check config file");
+	}
 
 }

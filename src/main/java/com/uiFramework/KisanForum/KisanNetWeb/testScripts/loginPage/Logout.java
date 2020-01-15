@@ -20,7 +20,7 @@ public class Logout extends TestBase{
 		}
 		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		Thread.sleep(5000);
 		
 		HomePage homePage = new HomePage(driver);

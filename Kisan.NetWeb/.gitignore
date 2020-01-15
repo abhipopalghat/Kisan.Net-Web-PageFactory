@@ -3,3 +3,4 @@
 /screenShots/
 *.png
 /test-output/
+src/main/resources/screenShots/*

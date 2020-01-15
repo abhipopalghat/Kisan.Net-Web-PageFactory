@@ -1,13 +1,17 @@
 package com.uiFramework.KisanForum.KisanNetWeb.pageObject;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.Status;
 import com.uiFramework.KisanForum.KisanNetWeb.helper.assertion.VerificationHelper;
+import com.uiFramework.KisanForum.KisanNetWeb.helper.database.ApplicationDBQuery;
 import com.uiFramework.KisanForum.KisanNetWeb.helper.logger.LoggerHelper;
 import com.uiFramework.KisanForum.KisanNetWeb.helper.wait.WaitHelper;
 import com.uiFramework.KisanForum.KisanNetWeb.testbase.TestBase;
@@ -22,11 +26,8 @@ public class LoginPage {
 	
 	@FindBy(xpath ="//input[@type='tel']")
 	WebElement txtboxMobileNumber;
-	
-	@FindBy(xpath = "//input[@ng-reflect-placeholder='Your Number']")
-	WebElement yourNumberTextBox;
-	
-	@FindBy(xpath = "//button[starts-with(@id,'u_')]")
+		
+	@FindBy(xpath = "//span[contains(text(),'next')]")
 	WebElement btnNext;
 	
 	@FindBy(xpath = "//div[contains(text(),'Verify your phone number')]/parent::div/following-sibling::div[1]")
@@ -57,6 +58,17 @@ public class LoginPage {
 	@FindBy(xpath = "//h4[contains(text(),' UNAUTHORIZED')]")
 	WebElement unauthorizedMessage;
 	
+	@FindBy(xpath = "//strong[contains(text(),'Member')]")
+	WebElement btnloginAsMember;
+	
+	@FindBy(xpath = "//strong[contains(text(),'Organization')]")
+	WebElement btnloginAsOrganization;
+	
+	@FindBy(xpath = "//input[@placeholder='Your Number']")
+	WebElement txtBoxYourNumber;
+	
+	@FindAll(@FindBy(xpath = "//div[@class='wrapper otp-verification-input-container ng-star-inserted']/input"))
+	List<WebElement> boxesEnterOTP;
 	
 	public LoginPage(WebDriver driver) {
 		this.driver = driver;
@@ -81,14 +93,9 @@ public class LoginPage {
 		waitHelper.waitForframeToBeAvailableAndSwitchToIt(facebookLoginWindow, 10);
 		System.out.println("Switched to facebook window");
 	}
-	
-	public void enterMobileNumber(String mobileNumber) {
-		log.info("entering mobile number...."+mobileNumber);
-		logExtentReport("entering mobile number...."+mobileNumber);
-		this.txtboxMobileNumber.sendKeys(mobileNumber);
-	}
-	
+		
 	public void clickOnNextButton() {
+		waitHelper.WaitForElementClickable(btnNext, 10);
 		log.info("clicked on next button...");
 		logExtentReport("clicked on next button...");
 		btnNext.click();
@@ -141,18 +148,49 @@ public class LoginPage {
 		btnLogin.click();
 	}
 	
-	public void loginToApp(String emailId, String password) throws Exception {
+	public void loginAsExhibitor(String emailId, String password) throws Exception {
 		LoginPage loginPage = new LoginPage(driver);
 		/*loginPage.switchToFacebookFrame();
 		loginPage.clickOnCloseButton();
 		loginPage.clickOnExhibitorLoginButton();*/
+		
+		loginPage.clickOnLoginAsOrganizationButton();
 		loginPage.enterEmailId(emailId);
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
 		if(isUnautorizedAccess()) {
 			driver.navigate().back();
-			loginToApp(emailId, password);
+			loginAsExhibitor(emailId, password);
 		}
+	}
+	
+	public void loginAsVisitor(String mobile) throws Exception {
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.clickOnLoginAsMemberButton();
+		loginPage.enterMobileNumber(mobile);
+		loginPage.clickOnNextButton();
+		ApplicationDBQuery applicationDBQuery = new ApplicationDBQuery();
+		String otp = applicationDBQuery.getOTP(mobile);
+		System.out.println("Verification code is : " + otp);
+		enterOTP(otp);
+		loginPage.clickOnNextButton();
+		Thread.sleep(5000);
+		/*if(isUnautorizedAccess()) {
+			driver.navigate().back();
+			loginAsExhibitor(emailId, password);
+		}*/
+	}
+	
+	public void enterOTP(String otp) {
+		String code[] = otp.split("");
+		int i = 0;
+		waitHelper.WaitForElementClickable(boxesEnterOTP.get(i), 10);
+		for(String s : code) {
+			waitHelper.WaitForElementClickable(boxesEnterOTP.get(i), 10);
+			boxesEnterOTP.get(i).sendKeys(s);
+			i= i+1;
+		}
+		
 	}
 	
 	public boolean isUnautorizedAccess() {
@@ -165,5 +203,28 @@ public class LoginPage {
 		catch(Exception e){
 			return false;
 		}
+	}
+	
+	public void clickOnLoginAsMemberButton() {
+		waitHelper.WaitForElementClickable(btnloginAsMember, 10);
+		log.info("clicked on login as member button...");
+		logExtentReport("clicked on login as member button...");
+		btnloginAsMember.click();
+	}
+	
+	public void clickOnLoginAsOrganizationButton() {
+		waitHelper.WaitForElementClickable(btnloginAsOrganization, 10);
+		log.info("clicking on login as organization button...");
+		logExtentReport("clicking on login as organization button...");
+		btnloginAsOrganization.click();
+	}
+	
+	public void enterMobileNumber(String mobileNumber) {
+		waitHelper.waitForElementVisible(txtBoxYourNumber, 10);
+		log.info("entering mobile number...."+mobileNumber);
+		logExtentReport("entering mobile number...."+mobileNumber);
+		txtBoxYourNumber.click();
+		txtBoxYourNumber.sendKeys(mobileNumber);
+		//this.txtboxMobileNumber.sendKeys(mobileNumber);
 	}
 }

@@ -22,7 +22,7 @@ public class SearchNonExistingChannelOnHomePage extends TestBase {
 			}
 		}	
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnRightOptionMenu();

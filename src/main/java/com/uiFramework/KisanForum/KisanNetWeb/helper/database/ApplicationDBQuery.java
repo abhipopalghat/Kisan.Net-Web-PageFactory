@@ -8,13 +8,20 @@ import java.util.List;
 public class ApplicationDBQuery {
 
 		
-	public int getOTP(String mobileNumber) throws NumberFormatException, SQLException {
+	public String getOTP(String mobileNumber) throws NumberFormatException, SQLException {
 		int id = 0;
-		String dbQuery = "select * from profiles_verifymobiles where mobile='"+ mobileNumber+ "' AND code_verified_date is NULL order by code_sent_date desc;";
+		String updatedMobile = "%"+mobileNumber+"%";
+		System.out.println("Updated number is : " + updatedMobile);
+		try {
+		String dbQuery = "select * from profiles_verifymobiles where mobile like '"+ updatedMobile + "' AND code_verified_date is NULL order by code_sent_date desc;";
 		ResultSet result = DataBaseHelper.getResultSet(dbQuery);
 		result.next();
 		id = Integer.parseInt(result.getString("code"));
-		return id;
+		}
+		catch (Exception e) {
+			System.out.println("OTP is not generated");
+		}
+		return Integer.toString(id);
 	}
 	
 	public List<Employee> getEmployee() throws SQLException{
@@ -36,7 +43,8 @@ public class ApplicationDBQuery {
 
 	public static void main(String[] args) throws NumberFormatException, SQLException {
 		ApplicationDBQuery applicationDBQuery = new ApplicationDBQuery();
-		int otp = applicationDBQuery.getOTP("+919021633629");
+		String otp = applicationDBQuery.getOTP("4567800005");
+		//String otp1 = Integer.toString(otp);
 		System.out.println("Verification code is : " + otp);
 		/*List<Employee> listOfData = applicationDBQuery.getEmployee();
 		for(Employee data: listOfData){

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.uiFramework.KisanForum.KisanNetWeb.helper.logger.LoggerHelper;
@@ -66,5 +67,18 @@ public class DropDownHelper {
 			valueList.add(ele.getText());
 		}
 		return valueList;
+	}
+	
+	public void selectByText(WebElement element,List<WebElement> allOptions, String text) {
+		Actions action = new Actions(driver);    
+		action.moveToElement(element);
+		element.click();
+
+		for(WebElement option : allOptions) {
+		    if (option.getText().equals(text)) {
+		        option.click();
+		        break;
+		    }
+		}
 	}
 }

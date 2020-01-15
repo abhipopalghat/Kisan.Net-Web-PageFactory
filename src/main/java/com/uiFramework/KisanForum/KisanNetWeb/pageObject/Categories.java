@@ -26,7 +26,7 @@ public class Categories {
 	@FindAll(@FindBy(xpath = "//h4[@class='font-bold-four mrgn-b-none']"))
 	List<WebElement> channelCategories;
 	
-	@FindBy(xpath = "//a[contains(text(),'Next')]")
+	@FindBy(xpath = "//mat-list-item[@class='apply-filter width-auto mat-list-item']/div/a")
 	WebElement btnNext;
 	
 	public void logExtentReport(String s1) {
@@ -49,12 +49,14 @@ public class Categories {
 		for(int i = 0; i<5; i++) {
 			channelCategories.get(i).click();
 		}
+		Thread.sleep(2000);
 	}
 	
-	public void clickOnNextButton() {
+	public void clickOnNextButton() throws Exception {
 		log.info("Clicking on next button");
 		logExtentReport("Clicking on next button");
-		waitHelper.waitForElementVisible(btnNext, ObjectReader.reader.getExplicitWait());
+		waitHelper.WaitForElementClickable(btnNext, ObjectReader.reader.getExplicitWait());
+		Thread.sleep(1000);
 		btnNext.click();
 	}
 	

@@ -7,31 +7,17 @@ import org.testng.annotations.Test;
 import com.uiFramework.KisanForum.KisanNetWeb.pageObject.LoginPage;
 import com.uiFramework.KisanForum.KisanNetWeb.testbase.TestBase;
 
-public class LoginTest extends TestBase{
+public class LoginAsVisitor extends TestBase{
+	
 	@Test(dataProvider="testData",description="Login to App")
-	public void loginToApp(String emailId, String password, String runMode) throws Exception {
+	public void loginToApp(String emailId, String password, String mobile, String runMode) throws Exception {
 		if(runMode.equalsIgnoreCase("n")) {
 			throw new SkipException("Run mode for this data is marked N");
-		}
-		
-		
+		}		
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginAsExhibitor(emailId, password);
-		/*HomePage homePage = new HomePage(driver);
-		Thread.sleep(15000);
-		homePage.clickOnRightOptionMenu();
-		homePage.clickOnSearchButton();
-		homePage.enterChannelNameInSearchBox("KISAN");
-		homePage.clickOnChannelName("KISAN");*/
+		loginPage.loginAsVisitor("9021633629");			// incase we need to login with different number
+		//loginPage.loginAsVisitor(mobile);
 		Thread.sleep(5000);
-		// Commenting below code as login method is written in login page
-		
-		/*loginPage.switchToFacebookFrame();
-		loginPage.clickOnCloseButton();
-		loginPage.clickOnExhibitorLoginButton();
-		loginPage.enterEmailId(emailId);
-		loginPage.enterPassword(password);
-		loginPage.clickOnLoginButton();*/
 	}
 	
 	@DataProvider(name="testData")
@@ -39,5 +25,5 @@ public class LoginTest extends TestBase{
 		Object[][] data = getExcelData("Kisan.NetTestData.xlsx", "LoginData");
 		return data;
 	}	
-	
+
 }

@@ -28,7 +28,7 @@ public class BrokenLinks extends TestBase{
 			throw new SkipException("Run mode for this data is marked N");
 		}
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		Thread.sleep(3000);
 		
 		String homePage = ObjectReader.reader.getExhibitorLoginUrl();  

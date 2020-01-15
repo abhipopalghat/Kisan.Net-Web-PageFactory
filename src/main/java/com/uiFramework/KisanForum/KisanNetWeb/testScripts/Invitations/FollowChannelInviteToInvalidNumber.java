@@ -21,7 +21,7 @@ public class FollowChannelInviteToInvalidNumber extends TestBase {
 		}
 		mobileNumber = "9850";		// Sending invite to less than 10 digit mobile number
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.loginToApp(emailId, password);
+		loginPage.loginAsExhibitor(emailId, password);
 		
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnRightOptionMenu();

@@ -82,7 +82,7 @@ public class TestBase {
 		ObjectReader.reader = new PropertyReader();
 		reportDirectery = new File(ResourceHelper.getResourcePath("src/main/resources/screenShots"));
 		setUpDriver(ObjectReader.reader.getBrowserType());
-		extent = ExtentManager.getInstance();					// TO BE DELETED
+		extent = ExtentManager.getInstance();				// TO BE DELETED
 		test = extent.createTest(getClass().getSimpleName());
 		driver.manage().deleteAllCookies();
 		getApplicationUrl(ObjectReader.reader.getExhibitorLoginUrl());
